@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+apply from: '../shared/keepUnitySymbols.gradle'
+apply from: '../shared/common.gradle'
+**APPLY_PLUGINS**
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    
+    // Your native library
+    implementation(name: 'FastNativeDetect-debug', ext: 'aar')
+    
+    // === TensorFlow Lite Core ===
+    implementation "org.tensorflow:tensorflow-lite:2.9.0"
+    implementation "org.tensorflow:tensorflow-lite-support:0.4.4"
+    
+    // === GPU/NPU Acceleration ===
+    implementation "org.tensorflow:tensorflow-lite-gpu:2.9.0"
+    implementation "org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.4"
+    
+    // === Qualcomm NPU Support (QNN - AI Engine Direct) ===
+    // Uncomment for Snapdragon 8 Gen 1/2/3/Elite devices
+    implementation "com.qualcomm.qti:qnn-runtime:2.34.0"
+    implementation "com.qualcomm.qti:qnn-litert-delegate:2.34.0"
+    
+**DEPS**}
+
+
+android {
+    namespace "com.unity3d.player"
+    ndkPath "**NDKPATH**"
+    ndkVersion "**NDKVERSION**"
+
+    compileSdk **APIVERSION**
+    buildToolsVersion = "**BUILDTOOLS**"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+        minSdk **MINSDK**
+        targetSdk **TARGETSDK**
+        ndk {
+            abiFilters **ABIFILTERS**
+            debugSymbolLevel **DEBUGSYMBOLLEVEL**
+        }
+        versionCode **VERSIONCODE**
+        versionName '**VERSIONNAME**'
+        consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**
+**DEFAULT_CONFIG_SETUP**
+    }
+
+    lint {
+        abortOnError false
+    }
+
+    androidResources {
+        noCompress = **BUILTIN_NOCOMPRESS** + unityStreamingAssets.tokenize(', ')
+        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }**PACKAGING**
+}
+**IL_CPP_BUILD_SETUP**
+**SOURCE_BUILD_SETUP**
+**EXTERNAL_SOURCES**
